@@ -1,303 +1,142 @@
-# Assignment 3 - Complete Documentation
+#Assignment 3 - Complete Documentation
 
-**Student Name**: [Your Full Name]  
-**Student ID**: [Your ID]  
-**Date Submitted**: [Submission Date]
+Student Name: Reem Abdullah Al-Sulaiman
+Student ID: 444052278
+Date Submitted: May2,2026
 
----
+🎥 VIDEO DEMONSTRATION LINK (REQUIRED)
+Video Link:
+Video filename: 
 
-## 🎥 VIDEO DEMONSTRATION LINK (REQUIRED)
-
-> **⚠️ IMPORTANT: This section is REQUIRED for grading!**
-> 
-> Upload your 3-5 minute video to your **PERSONAL Gmail Google Drive** (NOT university email).
-> Set sharing to "Anyone with the link can view".
-> Test the link in incognito/private mode before submitting.
-
-**Video Link**: [Paste your personal Gmail Google Drive link here]
-
-**Video filename**: `[YourStudentID]_Assignment3_Synchronization.mp4`
-
-**Verification**:
-- [ ] Link is accessible (tested in incognito mode)
-- [ ] Video is 3-5 minutes long
-- [ ] Video shows code walkthrough and commits
-- [ ] Video has clear audio
-- [ ] Uploaded to PERSONAL Gmail (not @std.psau.edu.sa)
+Verification:
+✔ Link is accessible
+✔ Video is 3-5 minutes
+✔ Shows code and commits
+✔ Clear audio
 
 ---
 
-## Part 1: Development Log (1 mark)
+# Part 1: Development Log
 
-Document your development process with **minimum 3 entries** showing progression:
+Entry 1 - April 29, 8:00 PM
+What I implemented: Forked the repository and set my student ID.
+Challenges encountered: Understanding the structure of the project.
+How I solved it: Carefully read the README file.
+Testing approach: Compiled and ran the program.
+Time spent: 30 minutes
 
-### Entry 1 - [Date, Time]
-**What I implemented**: 
+Entry 2 -April 30, 8:00 PM
+What I implemented: Added ReentrantLock to protect shared counters.
+Challenges encountered: Determining where to place lock and unlock.
+How I solved it: Used try-finally blocks to ensure safe unlocking.
+Testing approach: Checked correctness of counter values.
+Time spent: 45 minutes
 
-**Challenges encountered**: 
+Entry 3 - May 1,8:00 PM
+What I implemented: Protected executionLog using lock.
+Challenges encountered: Preventing concurrent modification issues.
+How I solved it: Wrapped log updates inside lock.
+Testing approach: Ran program multiple times.
+Time spent: 30 minutes
+Entry 4 - May 2, 8:00 PM
+What I implemented: Added Semaphore to control CPU access.
+Challenges encountered: Understanding acquire and release methods.
+How I solved it: Applied semaphore around execution section.
+Testing approach: Verified that only one thread runs at a time.
+Time spent: 40 minutes
+---
 
-**How I solved it**: 
+# Part 2: Technical Questions
 
-**Testing approach**: 
+Question 1:
+Two race conditions exist in the original code. First, multiple threads update shared counters like contextSwitchCount simultaneously, which may lead to incorrect values. Second, executionLog can be accessed by multiple threads at the same time, which may cause inconsistent data or runtime exceptions. Synchronization ensures that only one thread modifies shared data at a time.
 
-**Time spent**: 
+Question 2:
+ReentrantLock is used to protect shared resources such as counters and logs to ensure thread safety. Semaphore is used to control access to CPU, allowing only one thread to execute at a time. Locks ensure safe data modification, while semaphore controls resource access.
+
+Question 3:
+Deadlock occurs when threads wait indefinitely for resources held by each other. Two prevention techniques include using try-finally blocks and avoiding nested locks. In my implementation, I ensured all locks and semaphores are released properly using try-finally.
+
+Question 4:
+I used one lock (coarse-grained locking) for all counters. This simplifies the implementation and reduces the chance of errors. Fine-grained locking can improve performance but increases complexity. Since the counters are simple, one lock is sufficient and effective.
 
 ---
 
-### Entry 2 - [Date, Time]
-**What I implemented**: 
+# Part 3: Synchronization Analysis
 
-**Challenges encountered**: 
+Critical Section #1:
+Variables: contextSwitchCount, completedProcessCount, totalWaitingTime
+Why they need protection: They are shared between multiple threads
+Synchronization mechanism used: ReentrantLock
+Justification: Prevents race conditions and ensures correct values
 
-**How I solved it**: 
+Critical Section #2:
+Resource: executionLog
+Why it needs protection: Multiple threads write to it simultaneously
+Synchronization mechanism used: ReentrantLock
+Justification: Prevents data corruption and exceptions
 
-**Testing approach**: 
-
-**Time spent**: 
-
----
-
-### Entry 3 - [Date, Time]
-**What I implemented**: 
-
-**Challenges encountered**: 
-
-**How I solved it**: 
-
-**Testing approach**: 
-
-**Time spent**: 
+Critical Section #3:
+Purpose of semaphore: Control access to CPU
+Number of permits: 1 (binary semaphore)
+Where implemented: Around process execution
+Synchronization mechanism used: Semaphore
+Effect on program behavior: Ensures only one thread executes at a time
 
 ---
 
-### Entry 4 - [Date, Time]
-**What I implemented**: 
+# Part 4: Testing and Verification
 
-**Challenges encountered**: 
+Test 1: Consistency Check
+I ran the program multiple times and observed consistent results. Synchronization ensures stable and correct output even with multiple threads.
 
-**How I solved it**: 
+Test 2: Exception Testing
+I tested for ConcurrentModificationException and no errors occurred during execution.
 
-**Testing approach**: 
+Test 3: Correctness Verification
+I verified that counters and waiting time values are correct after execution.
 
-**Time spent**: 
-
----
-
-### Entry 5 - [Date, Time]
-**What I implemented**: 
-
-**Challenges encountered**: 
-
-**How I solved it**: 
-
-**Testing approach**: 
-
-**Time spent**: 
+Test 4: Different Scenarios
+I tested the program with different values and it behaved correctly in all cases.
 
 ---
 
-## Part 2: Technical Questions (1 mark)
+# Part 5: Reflection and Learning
 
-### Question 1: Race Conditions
-**Q**: Identify and explain TWO race conditions in the original code. For each:
-- What shared resource is affected?
-- Why is concurrent access a problem?
-- What incorrect behavior could occur?
+I learned that synchronization is essential in multithreaded programs to prevent race conditions and ensure data consistency. Using locks protects shared data, while semaphores control access to shared resources. These concepts are important in operating systems and real-world applications.
 
-**Your Answer**:
+Real-world applications:
+1. Banking systems where multiple transactions occur simultaneously
+2. Database systems where multiple users access shared data
 
-[Your answer here - 4-6 sentences with code examples]
-
----
-
-### Question 2: Locks vs Semaphores
-**Q**: Explain the difference between ReentrantLock and Semaphore. Where did you use each in your code and why?
-
-**Your Answer**:
-
-[Your answer here - explain your implementation choices]
+How I would explain synchronization:
+Synchronization ensures that multiple threads do not access shared resources at the same time, similar to taking turns to use a resource.
 
 ---
 
-### Question 3: Deadlock Prevention
-**Q**: What is deadlock? Explain TWO prevention techniques and what you did to prevent deadlocks in your code.
+# Part 6: GitHub Repository Information
 
-**Your Answer**:
+Repository URL:
+Number of commits: 4
 
-[Your answer here - reference try-finally blocks, lock ordering, etc.]
-
----
-
-### Question 4: Lock Granularity Design Decision 
-**Q**: For Task 1 (protecting the three counters), explain your lock design choice:
-- Did you use ONE lock for all three counters (coarse-grained) OR separate locks for each counter (fine-grained)?
-- Explain WHY you made this choice
-- What are the trade-offs between the two approaches?
-- Given that the three counters are independent, which approach provides better concurrency and why?
-
-**Your Answer**:
-
-[Your answer here - explain coarse-grained vs fine-grained locking, independence of counters, concurrency implications. Show understanding of when to use each approach. 5-8 sentences expected.]
+Commit messages:
+1. Set student ID
+2. Added ReentrantLock
+3. Added Semaphore
+4. Final commit
 
 ---
 
-## Part 3: Synchronization Analysis (1 mark)
+# Summary
 
-### Critical Section #1: Counter Variables
+Total time spent: 3-4 hours
 
-**Which variables**: 
+Key takeaways:
+1. Importance of synchronization
+2. Using locks and semaphores
+3. Preventing race conditions
 
-**Why they need protection**: 
+Most challenging aspect: Understanding synchronization concepts
+What I'm most proud of: Successfully implementing thread-safe code
 
-**Synchronization mechanism used**: 
-
-**Code snippet**:
-```java
-// Paste your implementation here
-```
-
-**Justification**: 
-
----
-
-### Critical Section #2: Execution Log
-
-**What resource**: 
-
-**Why it needs protection**: 
-
-**Synchronization mechanism used**: 
-
-**Code snippet**:
-```java
-// Paste your implementation here
-```
-
-**Justification**: 
-
----
-
-### Critical Section #3: CPU Semaphore
-
-**Purpose of semaphore**: 
-
-**Number of permits and why**: 
-
-**Where implemented**: 
-
-**Code snippet**:
-```java
-// Paste your implementation here
-```
-
-**Effect on program behavior**: 
-
----
-
-## Part 4: Testing and Verification (2 marks)
-
-### Test 1: Consistency Check
-**What I tested**: Running program multiple times to verify consistent results
-
-**Testing procedure**: 
-```bash
-# Commands used (run the program at least 5 times)
-```
-
-**Results**: 
-(Show that running multiple times produces consistent, correct results)
-
-**Why synchronization is necessary**: 
-(Explain what race conditions COULD occur without synchronization, even if you didn't observe them. Explain which shared resources need protection and why.)
-
-**Conclusion**: 
-
----
-
-### Test 2: Exception Testing
-**What I tested**: Checking for ConcurrentModificationException
-
-**Testing procedure**: 
-
-**Results**: 
-
-**What this proves**: 
-
----
-
-### Test 3: Correctness Verification
-**What I tested**: Verifying correct final values (total burst time, context switches, etc.)
-
-**Expected values**: 
-
-**Actual values**: 
-
-**Analysis**: 
-
----
-
-### Test 4: Different Scenarios
-**Scenario tested**: [e.g., different time quantum, more processes, etc.]
-
-**Purpose**: 
-
-**Results**: 
-
-**What I learned**: 
-
----
-
-## Part 5: Reflection and Learning
-
-### What I learned about synchronization:
-
-[6-8 sentences about key concepts, challenges, insights]
-
----
-
-### Real-world applications:
-
-Give TWO examples where synchronization is critical:
-
-**Example 1**: 
-
-**Example 2**: 
-
----
-
-### How I would explain synchronization to others:
-
-[Explain to someone who just finished Assignment 1 - use simple terms and analogies]
-
----
-
-## Part 6: GitHub Repository Information
-
-**Repository URL**: 
-
-**Number of commits**: 
-
-**Commit messages**: 
-1. 
-2. 
-3. 
-4. 
-
----
-
-## Summary
-
-**Total time spent on assignment**: 
-
-**Key takeaways**: 
-1. 
-2. 
-3. 
-
-**Most challenging aspect**: 
-
-**What I'm most proud of**: 
-
----
-
-**End of Documentation**
+End of Documentation
