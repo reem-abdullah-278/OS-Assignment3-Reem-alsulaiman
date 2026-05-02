@@ -38,7 +38,7 @@ Challenges encountered: Preventing concurrent modification issues.
 How I solved it: Wrapped log updates inside lock.
 Testing approach: Ran program multiple times.
 Time spent: 30 minutes
-Entry 4 - May 2, 8:00 PM
+Entry 4 - May 3, 8:00 PM
 What I implemented: Added Semaphore to control CPU access.
 Challenges encountered: Understanding acquire and release methods.
 How I solved it: Applied semaphore around execution section.
